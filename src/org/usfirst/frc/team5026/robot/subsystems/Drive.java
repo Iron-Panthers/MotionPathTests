@@ -251,4 +251,25 @@ public class Drive extends Subsystem implements KinematicModel {
 		avg *= Constants.INCHES_PER_ENCODER_REV * 10; // 10 is for conversion from 100ms to 1s
 		return avg;
 	}
+	@Override
+	public double getRotation() {
+		if (hardware.gyro != null) {
+			return hardware.gyro.getAngle();
+		}
+		return 0;
+	}
+	@Override
+	public double getRotationalVelocity() {
+		if (hardware.gyro != null) {
+			return hardware.gyro.getRate();
+		}
+		return 0;
+	}
+	@Override
+	public double getRotationalVelocityInRadians() {
+		if (hardware.gyro != null) {
+			return hardware.gyro.getRate() / 180.0 * Math.PI;
+		}
+		return 0;
+	}
 }
