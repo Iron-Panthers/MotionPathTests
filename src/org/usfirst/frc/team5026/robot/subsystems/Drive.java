@@ -272,4 +272,14 @@ public class Drive extends Subsystem implements KinematicModel {
 		}
 		return 0;
 	}
+	@Override
+	public void set(double l, double r) {
+		left.setupPositionMode();
+		right.setupPositionMode();
+		// Conversion might need to take place for l and r velocities
+		SmartDashboard.putNumber("Left set velocity (MotionPath)", l);
+		SmartDashboard.putNumber("Right set velocity (MotionPath)", r);
+		left.velocityControl(l);
+		right.velocityControl(r);
+	}
 }

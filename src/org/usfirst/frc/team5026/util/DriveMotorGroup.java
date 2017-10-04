@@ -96,6 +96,10 @@ public class DriveMotorGroup implements SpeedController {
 		encoderMotor.changeControlMode(TalonControlMode.PercentVbus);
 		encoderMotor.set(value);
 	}
+	public void velocityControl(double target) {
+		encoderMotor.changeControlMode(TalonControlMode.Speed);
+		encoderMotor.set(target);
+	}
 	public void motionProfileControl() {
 		// The motor is already fed the values!!! no target!
 		encoderMotor.enable();

@@ -9,4 +9,5 @@ public interface KinematicModel {
 	public double getRotationalVelocityInRadians(); // Method for rotational speed in rad/s
 	public double getVelocity(); // Method for the velocity of the robot
 	//TODO remove unnescessary radians and degrees. Just have one
+	public void set(double left, double right); // Sets the motor speeds to a given velocity (left and right)
 }
