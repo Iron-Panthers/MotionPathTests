@@ -10,7 +10,7 @@ public class CombinationFollower {
 		double lFollow = LongitudalFollower.getOut(path, model);
 		// Both of the above methods return velocities.
 		// Velocity inputted is: KinematicModel.set(left, right)
-		
+		// These should be velocities (in rot/100ms)
 		model.set(lFollow + gFollow, lFollow - gFollow);
 	}
 	// TODO add a way of using subclassed Followers
