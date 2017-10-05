@@ -1,5 +1,8 @@
 package org.usfirst.frc.team5026.util;
 
+import org.usfirst.frc.team5026.util.motionprofile.MotionPath;
+import org.usfirst.frc.team5026.util.motionprofile.MotionPathPoint;
+
 public class Constants { 
 	// Joystick Constants 
 	//RED 
@@ -212,4 +215,8 @@ public class Constants {
 	public static final double MOTION_PROFILE_VELOCITY = 20; // Inches/seconds
 	public static final double ROBOT_WIDTH = 30; // Inches
 	
+	public static final double[] LONGITUDAL_PIDF = {0,0,0,0};
+	public static final double[] GYRO_PIDF = {0,0,0,0};
+	
+	public static final MotionPath AUTO_MOTION_PATH = new MotionPath(new MotionPathPoint(0,0,0,0), new MotionPathPoint(1,10,50,5), new MotionPathPoint(5,15,5,45), new MotionPathPoint(8,16,0,50));
 }

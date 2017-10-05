@@ -38,11 +38,13 @@ public class MotionPathFollower extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	// stop!
+    	Robot.drive.stopMotors();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	// stop anyways!
+    	Robot.drive.stopMotors();
     }
 }

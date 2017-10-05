@@ -4,27 +4,22 @@ public class GyroFollower extends Follower {
 	public static final int LOOK_AHEAD = 5; // Looks 5 points ahead
 	public static final double DELTA_TIME = 0.02;
 	
-	static double p;
-	static double i;
-	static double d;
-	static double f;
-	
 	static double gyroError = 0;
 	static double totalGyroError = 0;
 	static double lastGyroError = Double.NaN;
 	
-	public static void startFollow(double[] pidf) {
-		p = pidf[0];
-		i = pidf[1];
-		d = pidf[2];
-		f = pidf[3];
-
+	public GyroFollower(double[] pidf) {
+		super(pidf);
+		startFollow();
+	}
+	
+	public void startFollow() {
 		gyroError = 0;
 		totalGyroError = 0;
 		lastGyroError = Double.NaN;
 	}
-	public static double getOut(MotionPath path, KinematicModel robot) {
-		MotionPathPoint target = Follower.getPoint(path, robot, LOOK_AHEAD);
+	public double getOut(MotionPath path, KinematicModel robot) {
+		MotionPathPoint target = super.getPoint(path, robot, LOOK_AHEAD);
 		
 		// Need to look at the target's theta and use that as target
 		double targetAngle = target.theta;
@@ -32,6 +27,7 @@ public class GyroFollower extends Follower {
 		
 		// No need for velhat here, just do simple pid.
 		gyroError = actualAngle - targetAngle;
+		// If gyroError is positive, we should turn LEFT! right motor is addition, left is subtraction
 		if (Double.isNaN(lastGyroError)) {
 			lastGyroError = gyroError;
 		}

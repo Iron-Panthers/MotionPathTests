@@ -1,30 +1,25 @@
 package org.usfirst.frc.team5026.util.motionprofile;
 
 public class LongitudalFollower extends Follower {
-	public static final int LOOK_AHEAD = 0; // Looks at current point
-	public static final double DELTA_TIME = 0.02;
+	public  final int LOOK_AHEAD = 0; // Looks at current point
+	public  final double DELTA_TIME = 0.02;
 	
-	static double p;
-	static double i;
-	static double d;
-	static double f;
+	double posError = 0;
+	double totalPosError = 0;
+	double lastPosError = Double.NaN;
 	
-	static double posError = 0;
-	static double totalPosError = 0;
-	static double lastPosError = Double.NaN;
+	public LongitudalFollower(double[] pidf) {
+		super(pidf);
+		startFollow();
+	}
 	
-	public static void startFollow(double[] pidf) {
-		p = pidf[0];
-		i = pidf[1];
-		d = pidf[2];
-		f = pidf[3];
-
+	public void startFollow() {
 		posError = 0;
 		totalPosError = 0;
 		lastPosError = Double.NaN;
 	}
-	public static double getOut(MotionPath path, KinematicModel robot) {
-		MotionPathPoint target = Follower.getPoint(path, robot, LOOK_AHEAD);
+	public double getOut(MotionPath path, KinematicModel robot) {
+		MotionPathPoint target = super.getPoint(path, robot, LOOK_AHEAD);
 		
 		// Need to decode the (x,y) coordinates into encoder values (avg)
 		double targetDistAlongPath = path.decode(target);

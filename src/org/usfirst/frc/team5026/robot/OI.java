@@ -2,6 +2,8 @@ package org.usfirst.frc.team5026.robot;
 
 import org.usfirst.frc.team5026.robot.commands.drive.DriveShiftGear;
 import org.usfirst.frc.team5026.robot.commands.drive.DriveSwapForwards;
+import org.usfirst.frc.team5026.robot.commands.motionpath.MotionPathFollower;
+import org.usfirst.frc.team5026.util.Constants;
 import org.usfirst.frc.team5026.util.PantherJoystick;
 
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -68,6 +70,6 @@ public class OI {
 		driveButton3.whenPressed(new DriveShiftGear());
 //		driveButton2.whileHeld(new LEDSignalGear());
 		
-		
+		boardButton1.whenPressed(new MotionPathFollower(Constants.AUTO_MOTION_PATH));
 	}
 }
