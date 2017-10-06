@@ -15,6 +15,7 @@ public class CombinationFollower {
 //		double lFollow = LongitudalFollower.getOut(path, model);
 		double lFollow = followers.get(0).getOut(path, model);
 		double gFollow = followers.get(1).getOut(path, model);
+		sendInfo(path,model);
 		// Both of the above methods return velocities.
 		// Velocity inputted is: KinematicModel.set(left, right)
 		// These should be velocities (in rot/100ms)
@@ -22,6 +23,12 @@ public class CombinationFollower {
 	}
 	public static boolean isFinished(MotionPath path, KinematicModel model) {
 		return path.getClosestPoint(model) == path.points[path.points.length-1];
+		// TODO fix to being when within threshold of last point... this doesn't work
 	}
-	// TODO add a way of using subclassed Followers
+	public static void sendInfo(MotionPath path, KinematicModel robot) {
+		for (Follower f : followers) {
+			System.out.println(f);
+			System.out.println(f.getOut(path, robot));
+		}
+	}
 }

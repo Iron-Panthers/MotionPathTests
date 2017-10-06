@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5026.robot.subsystems;
 
 import org.usfirst.frc.team5026.robot.Robot;
+import org.usfirst.frc.team5026.robot.commands.FieldPositionUpdater;
 import org.usfirst.frc.team5026.robot.commands.drive.DriveWithJoystick;
 import org.usfirst.frc.team5026.util.Constants;
 import org.usfirst.frc.team5026.util.DriveMotorGroup;
@@ -43,6 +44,8 @@ public class Drive extends Subsystem implements KinematicModel {
 	
 	private boolean backwards;
 	
+	public FieldPositionUpdater fpsUpdater;
+	
 	public Drive() {
 		joystick = Robot.oi.driveJoystick;
 		hardware = Robot.hardware;
@@ -53,6 +56,8 @@ public class Drive extends Subsystem implements KinematicModel {
 		left = hardware.leftMotor;
 		right = hardware.rightMotor;
 		led = hardware.led;
+		fpsUpdater = new FieldPositionUpdater();
+		fpsUpdater.start();
 	}
 	public void drive(double left, double right) {
 		drive.drive(left, right);

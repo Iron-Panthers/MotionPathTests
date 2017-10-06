@@ -8,6 +8,9 @@ public abstract class Follower {
 	double f;
 	
 	public Follower(double[] pidf) {
+		setup(pidf);
+	}
+	public void setup(double[] pidf) {
 		p = pidf[0];
 		i = pidf[1];
 		d = pidf[2];
@@ -23,6 +26,9 @@ public abstract class Follower {
 			p = path.points[path.points.length-1];
 		}
 		return p;
+	}
+	public String toString() {
+		return "P: "+p+"\tI: "+i+"\tD: "+d+"\tF: "+f;
 	}
 	public abstract double getOut(MotionPath path, KinematicModel robot); // This needs to return a velocity in RPM or rot/100ms
 }
