@@ -37,6 +37,7 @@ public class LongitudalFollower extends Follower {
 		totalPosError += posError;
 		double pidOut = p * posError + i * totalPosError + d * (posError - lastPosError) / DELTA_TIME;
 		lastPosError = posError;
+		// pidOut should be in rot/100ms
 		
 		double overallOut = pidOut + velHat;
 		return overallOut;

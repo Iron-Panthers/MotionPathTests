@@ -56,8 +56,10 @@ public class Drive extends Subsystem implements KinematicModel {
 		left = hardware.leftMotor;
 		right = hardware.rightMotor;
 		led = hardware.led;
+		
 		fpsUpdater = new FieldPositionUpdater();
-		fpsUpdater.start();
+//		fpsUpdater.setRunWhenDisabled(true);
+//		fpsUpdater.start();
 	}
 	public void drive(double left, double right) {
 		drive.drive(left, right);
@@ -224,11 +226,17 @@ public class Drive extends Subsystem implements KinematicModel {
 			// Reset x and y position on reset
 			x = 0;
 			y = 0;
+			hardware.gyro.reset();
 		}
-		x += getVelocity() * Math.sin(getRotationInRadians()) * deltaTime;
-		y += getVelocity() * Math.cos(getRotationInRadians()) * deltaTime;
+		double avgV = getVelocity();
+		x += avgV * Math.sin(getRotationInRadians()) * deltaTime;
+		y += avgV * Math.cos(getRotationInRadians()) * deltaTime;
 		SmartDashboard.putNumber("X Value of Robot", x);
 		SmartDashboard.putNumber("Y Value of Robot", y);
+		System.out.println("X: "+x);
+		System.out.println("Y: "+y);
+		System.out.println("Theta (rad): "+getRotationInRadians());
+		System.out.println("Theta (deg): "+getRotation());
 	}
 	@Override
 	public double getWidth() {
@@ -252,8 +260,12 @@ public class Drive extends Subsystem implements KinematicModel {
 	public double getVelocity() {
 		// Convert velocity to inches/sec or whatever value is in Constants.
 		double avg = (left.getEncMotor().getSpeed() + right.getEncMotor().getSpeed()) / 2;
+		System.out.println("Avg V (pre conversion): "+avg);
+		SmartDashboard.putNumber("Avg V (pre conversion)",avg);
 		// TODO CONVERSION
-		avg *= Constants.INCHES_PER_ENCODER_REV * 10; // 10 is for conversion from 100ms to 1s
+		avg *= (Constants.ENCODER_TICKS_PER_ROTATION) / (Constants.ENCODER_TICKS_PER_INCH * 10); // 10 is for conversion from 100ms to 1s
+		System.out.println("Avg V (post conversion): "+avg);
+		SmartDashboard.putNumber("Avg V (post conversion)",avg);
 		return avg;
 	}
 	@Override

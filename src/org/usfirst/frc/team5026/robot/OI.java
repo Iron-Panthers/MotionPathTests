@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5026.robot;
 
+import org.usfirst.frc.team5026.robot.commands.FieldPositionReset;
 import org.usfirst.frc.team5026.robot.commands.drive.DriveShiftGear;
 import org.usfirst.frc.team5026.robot.commands.drive.DriveSwapForwards;
 import org.usfirst.frc.team5026.robot.commands.motionpath.MotionPathFollower;
@@ -71,5 +72,6 @@ public class OI {
 //		driveButton2.whileHeld(new LEDSignalGear());
 		
 		boardButton1.whenPressed(new MotionPathFollower(Constants.AUTO_MOTION_PATH));
+		boardButton2.whenPressed(new FieldPositionReset());
 	}
 }

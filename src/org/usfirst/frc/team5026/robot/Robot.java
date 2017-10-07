@@ -4,6 +4,10 @@ package org.usfirst.frc.team5026.robot;
 import org.usfirst.frc.team5026.robot.subsystems.Drive;
 import org.usfirst.frc.team5026.util.Hardware;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -26,6 +30,14 @@ public class Robot extends IterativeRobot {
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	public static Drive drive;
 	public static Hardware hardware;
+	
+	// New Camera stuff!
+	public static UsbCamera cam1;
+	public static UsbCamera cam2;
+	
+	public static CvSink cvsink1;
+	public static CvSink cvsink2;
+	public static VideoSink server;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -37,7 +49,26 @@ public class Robot extends IterativeRobot {
 		hardware = new Hardware();
 		drive = new Drive();
 		// chooser.addObject("My Auto", new MyAutoCommand());
+		
 		SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData(Scheduler.getInstance());
+		oi.mapButtonBoard();
+		startCamera();
+		drive.fpsUpdater.setRunWhenDisabled(true);
+		drive.fpsUpdater.start();
+	}
+	private static void startCamera() {
+		CameraServer camera = CameraServer.getInstance();
+		cam1 = camera.startAutomaticCapture("cam0", 0);
+		cam2 = camera.startAutomaticCapture("cam1", 1);
+		server = camera.getServer();
+		cvsink1 = new CvSink("cam1cv");
+		cvsink2 = new CvSink("cam2cv");
+		cvsink1.setSource(cam1);
+		cvsink1.setEnabled(true);
+		cvsink2.setSource(cam2);
+		cvsink2.setEnabled(true);
+//		server.setSource(cam1);
 	}
 
 	/**

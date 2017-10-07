@@ -3,3 +3,7 @@
 build.properties
 build.xml
 bin/*
+
+/bin/
+build/*
+*.jar
