@@ -313,7 +313,7 @@ if OUTPUT_FILE_NAME.endswith(".java"):
 	f.write(" * ROBOT WHEEL RADIUS: "+str(RADIUS)+"\n")
 	f.write(" * ARCLENGTH NUM SAMPLES: "+str(ARCLENGTH_NUM_SAMPLES)+"\n")
 	f.write(" */\n\n")
-	f.write("public class "+className+" {\n")
+	f.write("public class "+className+" extends Path {\n")
 	length = int(totalTime / DELTA_TIME) + 1
 	f.write("\tpublic double[][] points = new double["+str(length)+"][2];\n")
 	currentTime = DELTA_TIME
@@ -348,6 +348,7 @@ if OUTPUT_FILE_NAME.endswith(".java"):
 	# Call methods:
 	for j in range(methodCount):
 		f.write("\t\tfill"+str(j)+"();\n")
+	f.write("\t\tsuper.points = points;\n");
 	f.write("\t}\n")
 	# while currentTime < totalTime + DELTA_TIME:
 	# 	vels = getVelsAtTime(currentTime, steps)

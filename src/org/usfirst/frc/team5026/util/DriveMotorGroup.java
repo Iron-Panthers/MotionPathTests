@@ -175,4 +175,9 @@ public class DriveMotorGroup implements SpeedController {
 	public void configNominalOutputVoltage(double max, double min) {
 		encoderMotor.configNominalOutputVoltage(max, min);
 	}
+	public void speedControl(double d) {
+		// Rot / 100ms
+		encoderMotor.changeControlMode(TalonControlMode.Speed);
+		encoderMotor.set(d);
+	}
 }

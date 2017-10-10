@@ -16,7 +16,7 @@ package org.usfirst.frc.team5026.util.motionprofile;
  * ARCLENGTH NUM SAMPLES: 10000
  */
 
-public class Path1Test {
+public class Path1Test extends Path {
 	public double[][] points = new double[587][2];
 	private void fill0() {
 		double[] temp0 = {0.125,0.125};

@@ -238,6 +238,10 @@ public class Drive extends Subsystem implements KinematicModel {
 		System.out.println("Theta (rad): "+getRotationInRadians());
 		System.out.println("Theta (deg): "+getRotation());
 	}
+	public void speedControl(double[] targets) {
+		left.speedControl(targets[0]);
+		right.speedControl(targets[1]);
+	}
 	@Override
 	public double getWidth() {
 		return Constants.ROBOT_WIDTH;
