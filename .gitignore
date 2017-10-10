@@ -26,3 +26,4 @@ scripts/build/exe\.win32-3\.6/unittest/
 scripts/build/exe\.win32-3\.6/
 build/*
 dist/*
+scripts/build/exe\.win-amd64-3\.6/
