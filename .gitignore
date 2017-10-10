@@ -4,3 +4,13 @@ build.properties
 build.xml
 bin/*
 /bin/
+
+scripts/build/exe\.win32-3\.6/xml/parsers/
+
+scripts/build/exe\.win32-3\.6/xml/
+
+scripts/build/exe\.win32-3\.6/urllib/
+
+scripts/build/exe\.win32-3\.6/unittest/
+
+scripts/build/exe\.win32-3\.6/
