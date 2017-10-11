@@ -54,8 +54,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(Scheduler.getInstance());
 		oi.mapButtonBoard();
 		startCamera();
-		drive.fpsUpdater.setRunWhenDisabled(true);
-		drive.fpsUpdater.start();
 	}
 	private static void startCamera() {
 		CameraServer camera = CameraServer.getInstance();
