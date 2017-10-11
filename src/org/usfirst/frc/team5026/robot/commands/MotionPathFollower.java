@@ -31,16 +31,16 @@ public class MotionPathFollower extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.drive.speedControl(points[index]);
-    	index++;
     	time += Constants.DELTA_TIME;
     	SmartDashboard.putNumber("Current Time on Path", time);
     	SmartDashboard.putNumber("Target Vel Left:", points[index][0]);
     	SmartDashboard.putNumber("Target Vel Right:", points[index][1]);
+    	index++;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return index + 1 == points.length;
+        return index + 1 >= points.length;
     }
 
     // Called once after isFinished returns true
