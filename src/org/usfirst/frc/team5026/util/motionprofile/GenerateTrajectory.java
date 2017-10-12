@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5026.util.motionprofile;
 
+
 public class GenerateTrajectory {
 	enum PathStage {
 		ACCEL,
@@ -21,6 +22,8 @@ public class GenerateTrajectory {
 	private double V_MAX, A_MAX, OMEGA_MAX, S_START_TURN, THETA_FINAL, S_FINAL;
 	
 	public static final double dt = 0.02;
+	public static final double WIDTH = 40;
+	public static final double RADIUS_OF_WHEEL = 4;
 	
 	public void mutateTrajectory(double V_MAX, double A_MAX, double OMEGA_MAX, double S_START_TURN, double THETA_FINAL, double S_FINAL) {
 		switch(phase) {
@@ -75,15 +78,21 @@ public class GenerateTrajectory {
 		THETA_FINAL = theta_target;
 		S_FINAL = s_final;
 	}
-	public void execute() {
+	public boolean execute() {
 		if (phase == PathStage.STOP) {
-			return;
+			return true;
 		}
 		mutateTrajectory(V_MAX, A_MAX, OMEGA_MAX, S_START_TURN, THETA_FINAL, S_FINAL);
 		double ds = s - last_s;
 		last_s = s;
 		X = X + ds * Math.sin(theta);
 		Y = Y + ds * Math.cos(theta);
-		System.out.println("(X, Y, Theta): ("+X+", "+Y+", "+theta+")");
+		double vL = (v + omega * WIDTH / 2) / RADIUS_OF_WHEEL;
+		double vR = (v - omega * WIDTH / 2) / RADIUS_OF_WHEEL;
+		double rot100msL = vL / 10 / (2 * Math.PI * RADIUS_OF_WHEEL); // also need to include encoder rev per wheel rev, or inches per encoder rev
+		double rot100msR = vR / 10 / (2 * Math.PI * RADIUS_OF_WHEEL);
+		// TODO HERE!
+		System.out.println("(X, Y, Theta; VL, VR): ("+X+", "+Y+", "+theta+"; "+vL+", "+vR+") (L: "+rot100msL+", R: "+rot100msR+")");
+		return false;
 	}
 }
