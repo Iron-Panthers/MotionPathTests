@@ -2,6 +2,8 @@ package org.usfirst.frc.team5026.util;
 
 import org.usfirst.frc.team5026.util.motionprofile.MotionPath;
 import org.usfirst.frc.team5026.util.motionprofile.MotionPathPoint;
+import org.usfirst.frc.team5026.util.motionprofile.OutPath;
+import org.usfirst.frc.team5026.util.motionprofile.Path;
 
 public class Constants { 
 	// Joystick Constants 
@@ -219,4 +221,5 @@ public class Constants {
 	public static final double[] GYRO_PIDF = {0,0,0,0};
 	
 	public static final MotionPath AUTO_MOTION_PATH = new MotionPath(new MotionPathPoint(0,0,5,0), new MotionPathPoint(1,10,50,5), new MotionPathPoint(5,15,5,45), new MotionPathPoint(8,16,0,50));
+	public static final Path AUTO_PATH_2 = new OutPath();
 }

@@ -179,5 +179,6 @@ public class DriveMotorGroup implements SpeedController {
 		// Rot / 100ms
 		encoderMotor.changeControlMode(TalonControlMode.Speed);
 		encoderMotor.set(d);
+		// Check units
 	}
 }
