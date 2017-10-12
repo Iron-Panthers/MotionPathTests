@@ -70,6 +70,6 @@ public class OI {
 		driveButton3.whenPressed(new DriveShiftGear());
 //		driveButton2.whileHeld(new LEDSignalGear());
 		
-		boardButton1.whenPressed(new MotionPathFollower(Constants.AUTO_PATH_2));
+		boardButton1.whenPressed(new MotionPathFollower(Robot.redTurnRightAutoTraj.getPath()));
 	}
 }

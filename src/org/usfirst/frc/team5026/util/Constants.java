@@ -2,8 +2,6 @@ package org.usfirst.frc.team5026.util;
 
 import org.usfirst.frc.team5026.util.motionprofile.MotionPath;
 import org.usfirst.frc.team5026.util.motionprofile.MotionPathPoint;
-import org.usfirst.frc.team5026.util.motionprofile.OutPath;
-import org.usfirst.frc.team5026.util.motionprofile.Path;
 
 public class Constants { 
 	// Joystick Constants 
@@ -214,12 +212,15 @@ public class Constants {
 	 * measured (loaded, on field): 1200
 	 */
 	public static final double DELTA_TIME = 0.02; // Seconds
-	public static final double MOTION_PROFILE_VELOCITY = 20; // Inches/seconds
-	public static final double ROBOT_WIDTH = 30; // Inches
+	public static final double ROBOT_WIDTH = 40; // Inches between wheels
 	
 	public static final double[] LONGITUDAL_PIDF = {0,0,0,0};
 	public static final double[] GYRO_PIDF = {0,0,0,0};
 	
-	public static final MotionPath AUTO_MOTION_PATH = new MotionPath(new MotionPathPoint(0,0,5,0), new MotionPathPoint(1,10,50,5), new MotionPathPoint(5,15,5,45), new MotionPathPoint(8,16,0,50));
-	public static final Path AUTO_PATH_2 = new OutPath();
+	public static final double VEL_PATH = 25; // Inches / s
+	public static final double ACCEL_PATH = 20; // Inches / s / s
+	public static final double OMEGA_MAX = Math.PI / 15; // Radians / s
+	public static final double RED_TURN_RIGHT_START_TURN_AT = 10; // Inches along the path to begin turn
+	public static final double RED_TURN_RIGHT_TOTAL_PATH_LENGTH = 60; // Inches along the path entirely
+	public static final double RED_TURN_RIGHT_ANGLE = Math.PI / 6; // RADIANS! (actual / 2)
 }

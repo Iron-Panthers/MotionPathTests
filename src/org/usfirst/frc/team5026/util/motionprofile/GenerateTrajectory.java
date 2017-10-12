@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5026.util.motionprofile;
 
+import org.usfirst.frc.team5026.util.Constants;
 
 public class GenerateTrajectory {
 	enum PathStage {
@@ -18,12 +19,15 @@ public class GenerateTrajectory {
 	public double omega;
 	
 	public double X, Y = 0;
+	public Path p = new Path();
 	
 	private double V_MAX, A_MAX, OMEGA_MAX, S_START_TURN, THETA_FINAL, S_FINAL;
 	
-	public static final double dt = 0.02;
-	public static final double WIDTH = 40;
-	public static final double RADIUS_OF_WHEEL = 4;
+	public static final double dt = Constants.DELTA_TIME;
+	public static final double WIDTH = Constants.ROBOT_WIDTH;
+	public static final double RADIUS_OF_WHEEL = Constants.WHEEL_DIAMETER / 2;
+	private static final int ENCODER_TICKS_PER_REVOLUTION = Constants.ENCODER_TICKS_PER_ROTATION;
+	private static final double ENCODER_TICKS_PER_INCH = Constants.ENCODER_TICKS_PER_INCH;
 	
 	public void mutateTrajectory(double V_MAX, double A_MAX, double OMEGA_MAX, double S_START_TURN, double THETA_FINAL, double S_FINAL) {
 		switch(phase) {
@@ -80,6 +84,8 @@ public class GenerateTrajectory {
 	}
 	public boolean execute() {
 		if (phase == PathStage.STOP) {
+			Double[] temp = {0.0, 0.0};
+			p.points.add(temp);
 			return true;
 		}
 		mutateTrajectory(V_MAX, A_MAX, OMEGA_MAX, S_START_TURN, THETA_FINAL, S_FINAL);
@@ -91,8 +97,19 @@ public class GenerateTrajectory {
 		double vR = (v - omega * WIDTH / 2) / RADIUS_OF_WHEEL;
 		double rot100msL = vL / 10 / (2 * Math.PI * RADIUS_OF_WHEEL); // also need to include encoder rev per wheel rev, or inches per encoder rev
 		double rot100msR = vR / 10 / (2 * Math.PI * RADIUS_OF_WHEEL);
+		
+		double realRotsL = vL * ENCODER_TICKS_PER_INCH / (ENCODER_TICKS_PER_REVOLUTION) * 60; // IT IS IN RPM
+		double realRotsR = vR * ENCODER_TICKS_PER_INCH / (ENCODER_TICKS_PER_REVOLUTION) * 60; // still wrong, for some reason
+		
+		// Need to test for velocity rot100ms to in/s
+		
 		// TODO HERE!
-		System.out.println("(X, Y, Theta; VL, VR): ("+X+", "+Y+", "+theta+"; "+vL+", "+vR+") (L: "+rot100msL+", R: "+rot100msR+")");
+		System.out.println("(X, Y, Theta; VL, VR): ("+X+", "+Y+", "+theta+"; "+vL+", "+vR+") (L: "+realRotsL+", R: "+realRotsR+")");
+		Double[] temp = {realRotsL, realRotsR};
+		p.points.add(temp);
 		return false;
+	}
+	public Path getPath() {
+		return p;
 	}
 }

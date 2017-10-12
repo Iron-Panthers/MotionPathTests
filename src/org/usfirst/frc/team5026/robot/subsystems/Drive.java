@@ -235,13 +235,15 @@ public class Drive extends Subsystem implements KinematicModel {
 		System.out.println("Theta (rad): "+getRotationInRadians());
 		System.out.println("Theta (deg): "+getRotation());
 	}
-	public void speedControl(double[] targets) {
-		double velL = targets[0] * Constants.ENCODER_TICKS_PER_INCH / (Constants.ENCODER_TICKS_PER_ROTATION * 4.0 / 10.0); // 4 because quadature encoder, 10 because seconds to 100ms
-		double velR = targets[0] * Constants.ENCODER_TICKS_PER_INCH / (Constants.ENCODER_TICKS_PER_ROTATION * 4.0 / 10.0); // 4 because quadature encoder, 10 because seconds to 100ms
+	public void speedControl(Double[] doubles) {
+//		double velL = doubles[0] * Constants.ENCODER_TICKS_PER_INCH / (Constants.ENCODER_TICKS_PER_ROTATION * 4.0 / 10.0); // 4 because quadature encoder, 10 because seconds to 100ms
+//		double velR = doubles[0] * Constants.ENCODER_TICKS_PER_INCH / (Constants.ENCODER_TICKS_PER_ROTATION * 4.0 / 10.0); // 4 because quadature encoder, 10 because seconds to 100ms
+		double velL = doubles[0];
+		double velR = doubles[1];
 		left.speedControl(velL);
 		right.speedControl(velR);
-		System.out.println(velL);
-		System.out.println(velR);
+//		System.out.println(velL);
+//		System.out.println(velR);
 	}
 	@Override
 	public double getWidth() {

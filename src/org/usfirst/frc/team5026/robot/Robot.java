@@ -2,7 +2,9 @@
 package org.usfirst.frc.team5026.robot;
 
 import org.usfirst.frc.team5026.robot.subsystems.Drive;
+import org.usfirst.frc.team5026.util.Constants;
 import org.usfirst.frc.team5026.util.Hardware;
+import org.usfirst.frc.team5026.util.motionprofile.GenerateTrajectory;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.UsbCamera;
@@ -38,6 +40,9 @@ public class Robot extends IterativeRobot {
 	public static CvSink cvsink1;
 	public static CvSink cvsink2;
 	public static VideoSink server;
+	
+	public static final GenerateTrajectory redTurnRightAutoTraj = new GenerateTrajectory(Constants.VEL_PATH, Constants.ACCEL_PATH, Constants.OMEGA_MAX, Constants.RED_TURN_RIGHT_START_TURN_AT, Constants.RED_TURN_RIGHT_ANGLE, Constants.RED_TURN_RIGHT_TOTAL_PATH_LENGTH);
+//	public static final GenerateTrajectory 
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -52,6 +57,11 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(Scheduler.getInstance());
+		
+		// Initialize paths
+		while (!redTurnRightAutoTraj.execute());
+		
+		// BUTTONS AND CAMERA
 		oi.mapButtonBoard();
 		startCamera();
 	}
