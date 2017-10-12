@@ -192,6 +192,45 @@ def getVelsAtTime(currentTime, steps):
 	vL = (v + omega * WIDTH / 2) / RADIUS
 	vR = (v - omega * WIDTH / 2) / RADIUS
 	return vL, vR
+def getArcLengthV(currentTime, steps):
+	t0 = steps[0]['t']
+	t1 = steps[1]['t'] + t0
+	t2 = steps[2]['t'] + t1
+	t3 = steps[3]['t'] + t2
+	t4 = steps[4]['t'] + t3
+	t5 = steps[5]['t'] + t4
+	t6 = steps[6]['t'] + t5
+	
+	vel = 0
+	
+	if currentTime < t0:
+		vel = steps[0]['a'] * currentTime
+	elif currentTime <= t6 and currentTime >= t5:
+		vel = steps[6]['v0'] + steps[6]['a'] * (currentTime - t5)
+	else:
+		vel = V_MAX
+	return vel
+def getTheta(currentTime, steps):
+	t0 = steps[0]['t']
+	t1 = steps[1]['t'] + t0
+	t2 = steps[2]['t'] + t1
+	t3 = steps[3]['t'] + t2
+	t4 = steps[4]['t'] + t3
+	t5 = steps[5]['t'] + t4
+	t6 = steps[6]['t'] + t5
+	
+	theta = 0
+	
+	if currentTime <= t2 and currentTime > t1:
+		# Accel time
+		theta = 0.5 * steps[2]['alpha'] * (currentTime - t1) ** 2
+	elif currentTime > t2 and currentTime <= t3:
+		theta = steps[2]['dtheta'] + steps[3]['o0'] * (currentTime - t2)
+	elif currentTime > t3 and currentTime <= t4:
+		theta = steps[2]['dtheta'] + steps[3]['dtheta'] + steps[4]['o0'] + 0.5 * steps[4]['alpha'] * (currentTime - t3) ** 2
+	elif currentTime > t4:
+		theta = target_theta
+	return convertToRadians(theta)
 # Easy steps first:
 step0 = ACCEL(ACCEL_MAX, 0, V_MAX, 0)
 step6 = ACCEL(-ACCEL_MAX, V_MAX, 0, target_theta)
@@ -328,12 +367,19 @@ if OUTPUT_FILE_NAME.endswith(".java"):
 		methodCount += 1
 		characters -= lines_per_method * charsPerLine_max_guess
 	line = 1
+	x = 0
+	y = 0
 	for m in range(methodCount):
 		f.write("\tprivate void fill"+str(m)+"() {\n")
 		for l in range(lines_per_method):
 			currentTime = line * DELTA_TIME
 			try:
 				vels = getVelsAtTime(currentTime, steps)
+				v = getArcLengthV(currentTime, steps)
+				theta = getTheta(currentTime, steps) # Radians
+				x += v * math.sin(theta) * DELTA_TIME
+				y += v * math.cos(theta) * DELTA_TIME
+				print("(X, Y, Theta, V): (%.2f, %.2f, %.2f, %.2f)" % (x, y, theta, v))
 				f.write("\t\tdouble[] temp"+str(line-1)+" = {"+str(vels[0])+","+str(vels[1])+"};\n")
 				f.write("\t\tpoints["+str(line-1)+"] = temp"+str(line-1)+";\n")
 				line += 1
