@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5026.robot.subsystems;
 
 import org.usfirst.frc.team5026.robot.Robot;
-import org.usfirst.frc.team5026.robot.commands.FieldPositionUpdater;
 import org.usfirst.frc.team5026.robot.commands.drive.DriveWithJoystick;
 import org.usfirst.frc.team5026.util.Constants;
 import org.usfirst.frc.team5026.util.DriveMotorGroup;
@@ -44,7 +43,6 @@ public class Drive extends Subsystem implements KinematicModel {
 	
 	private boolean backwards;
 	
-	public FieldPositionUpdater fpsUpdater;
 	
 	public Drive() {
 		joystick = Robot.oi.driveJoystick;
@@ -57,7 +55,6 @@ public class Drive extends Subsystem implements KinematicModel {
 		right = hardware.rightMotor;
 		led = hardware.led;
 		
-		fpsUpdater = new FieldPositionUpdater();
 //		fpsUpdater.setRunWhenDisabled(true);
 //		fpsUpdater.start();
 	}
@@ -239,8 +236,12 @@ public class Drive extends Subsystem implements KinematicModel {
 		System.out.println("Theta (deg): "+getRotation());
 	}
 	public void speedControl(double[] targets) {
-		left.speedControl(targets[0]);
-		right.speedControl(targets[1]);
+		double velL = targets[0] * Constants.ENCODER_TICKS_PER_INCH / (Constants.ENCODER_TICKS_PER_ROTATION * 4.0 / 10.0); // 4 because quadature encoder, 10 because seconds to 100ms
+		double velR = targets[0] * Constants.ENCODER_TICKS_PER_INCH / (Constants.ENCODER_TICKS_PER_ROTATION * 4.0 / 10.0); // 4 because quadature encoder, 10 because seconds to 100ms
+		left.speedControl(velL);
+		right.speedControl(velR);
+		System.out.println(velL);
+		System.out.println(velR);
 	}
 	@Override
 	public double getWidth() {
